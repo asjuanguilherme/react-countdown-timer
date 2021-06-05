@@ -3,8 +3,10 @@ import Styled from 'styled-components'
 
 
 const colorConfig = {
-   backgroundColor: '#fff',
-   color: '#222'
+   backgroundColor: 'hsl(236, 21%, 26%)',
+   backgroundDarkColor: 'hsl(236, 21%, 20%)',
+   color: 'hsl(345, 95%, 68%)',
+   darkColor: 'hsl(345, 95%, 63%)'
 }
 
 const ClockContainer = Styled.div`
@@ -13,24 +15,20 @@ const ClockContainer = Styled.div`
    display: flex;
    justify-content: center;
    align-items: center;
-   font-size: 50px;
    line-height: 0;
 `
-
 const FlipClock = Styled.div`
    display: flex;
-   
-   perspective: 90px;
+   font-size: 85px;
+   font-weight: bold;
 `
-
 const Digit = Styled.div`
    position: relative;
 
-   width: 45px;
-   height: 80px;
+   width: 120px;
+   height: 100px;
+   border-radius: 5px;
    overflow: hidden;
-
-   border: 2px solid white;
 
    &::before {
       content: attr(data-digit-before);
@@ -48,8 +46,8 @@ const Digit = Styled.div`
       top: 0;
       align-items: flex-end;
 
-      background-color: ${colorConfig.backgroundColor};
-      color: ${colorConfig.color};
+      background-color: ${colorConfig.backgroundDarkColor};
+      color: ${colorConfig.darkColor};
    }
 
    &::before,
@@ -65,7 +63,6 @@ const Digit = Styled.div`
       overflow: hidden;
    }
 `
-
 const CardFaceFront = Styled.div`
    position: absolute;
 
@@ -77,10 +74,9 @@ const CardFaceFront = Styled.div`
    height: 100%;
    overflow: hidden;
 
-   background-color: ${colorConfig.backgroundColor};
-   color: ${colorConfig.color};
+   background-color: ${colorConfig.backgroundDarkColor};
+   color: ${colorConfig.darkColor};
 `
-
 const CardFaceBack = Styled.div`
    position: absolute;
 
@@ -97,7 +93,6 @@ const CardFaceBack = Styled.div`
 
    transform: rotateX(-180deg);
 `
-
 const Card = Styled.div`
    position: relative;
    z-index: 1;
@@ -109,50 +104,50 @@ const Card = Styled.div`
    transform-origin: bottom;
    transform: rotateX(0);
 
-   transition: transform .4s ease-in-out;
-
    &.flipped {
       transform: rotateX(-180deg);
+      transition: transform .4s ease-in-out;
    }
 `
 
 const Countdown = () => {
 
+   const [number, setNumber] = React.useState({
+      previous: 0,
+      current: 1
+   })
+
    const [flipped, setFlipped] = React.useState(false)
 
-   const [numbers, setNumbers] = React.useState({previousNumber: 0, currentNumber: 1})
-
-   let flipTurn = true;
-
-   const clock = () => {
-      if( flipTurn ) {
-         return(
-            <Card className="flipped" >
-               <CardFaceFront> { numbers.previousNumber } </CardFaceFront>
-               <CardFaceBack>{ numbers.currentNumber }</CardFaceBack>
-            </Card>
-         )
-      }
-
-      if( !flipTurn ) {
-         setNumbers( state => ({
-            previousNumber: state.previousNumber++,
-            currentNumber: state.currentNumber++
-         }))
-         return(
-            <Card>
-               <CardFaceFront> { numbers.previousNumber } </CardFaceFront>
-               <CardFaceBack>{ numbers.currentNumber }</CardFaceBack>
-            </Card>
-         )
-      }
+   const updateNumber = () => {
+      setNumber( state => ({
+         previous: state.previous++,
+         current: state.current++
+      }))
    }
+
+   const renderNumber = () => {
+      setFlipped(true)
+
+      setTimeout( () => {
+         setFlipped(false)
+         updateNumber()
+      }, 400)
+   }
+
+   React.useEffect( () => {
+      const changePerSecond = setInterval( () => renderNumber(), 600 )
+      return () => { clearInterval(changePerSecond) }
+   })
 
    return (
       <ClockContainer>
          <FlipClock>
-            <Digit data-digit-before={ numbers.previousNumber } data-digit-after={ numbers.currentNumber }>
-               
+            <Digit data-digit-before={ number.previous } data-digit-after={ number.current }>
+               <Card className={ flipped ? 'flipped' : '' }>
+                  <CardFaceFront> { number.previous } </CardFaceFront>
+                  <CardFaceBack>{ number.current }</CardFaceBack>
+               </Card>
             </Digit>
          </FlipClock>
       </ClockContainer>
