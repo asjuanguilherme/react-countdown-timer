@@ -1,12 +1,12 @@
 import React from 'react'
-import Styled from 'styled-components'
+import Countdown from './Components/Countdown/Countdown.js'
 
 import Background from './Layout/Background.js'
 
 const App = () => {
    return (
       <Background>
-         
+         <Countdown />
       </Background>
    )
 }

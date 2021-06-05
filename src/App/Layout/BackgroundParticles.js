@@ -5,15 +5,18 @@ import backgroundStars from '../images/bg-stars.svg'
 
 const showHideParticles = keyframes`
    0% {
-      opacity: 2;
+      opacity: 1;
+      transform: scale(1.02);
    }
 
    50% {
       opacity: 0.2;
+      transform: scale(1);
    }
 
    100% {
       opacity: 1;
+      transform: scale(1.02);
    }
 ` 
 
@@ -23,7 +26,7 @@ const Particles = Styled.div`
    background-image: url(${backgroundStars});
    background-size: 60%;
    background-position: center;
-   animation: ${showHideParticles} 2s linear infinite;
+   animation: ${showHideParticles} 5s linear infinite;
 `
 
 const BackgroundParticles = () => {

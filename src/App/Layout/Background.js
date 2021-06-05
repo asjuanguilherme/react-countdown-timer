@@ -24,11 +24,23 @@ const BackgroundBottomElement = Styled.div`
    background-position: top;
    z-index: 10;
 `
+const MainContainer = Styled.main`
+   height: 100vh;
+   width: 100vw;
+   overflow: auto;
+   position: fixed; 
+   top: 0;
+   left: 0;
+   z-index: 100;
+`
 
-const Background = () => {
+const Background = (props) => {
    return (
       <div>
       <BackgroundContainer>
+         <MainContainer>
+            { props.children }
+         </MainContainer>
          <BackgroundBottomElement />
          <BackgroundParticles />
       </BackgroundContainer>
