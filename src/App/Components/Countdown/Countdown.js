@@ -50,8 +50,10 @@ const Countdown = () => {
 
    return (
       <ClockContainer>
-         <FlipCard label="Segundos" value={ time.minutes } />
-         <FlipCard label="Segundos" value={ time.seconds } />
+         <FlipCard label="segundos" value={ time.days } />
+         <FlipCard label="segundos" value={ time.hours } />
+         <FlipCard label="segundos" value={ time.minutes } />
+         <FlipCard label="segundos" value={ time.seconds } />
       </ClockContainer>
    )
 }

@@ -158,7 +158,7 @@ const Card = Styled.div`
    }
 `   
 
-const FlipCard = ({value}) => {
+const FlipCard = ({value, label}) => {
 
    const [number, setNumber] = React.useState({
       previous: 0,
@@ -168,12 +168,18 @@ const FlipCard = ({value}) => {
    const [flipped, setFlipped] = React.useState(false)
 
    const updateNumber = () => {
-      setNumber( state => ({
-         // previous: state.previous === 60? 0 : state.previous++,
-         // current: state.current === 60? 0 : state.current++
-         previous: value !== 59 ? value : value,
-         current:  value !== 0 ? value - 1 : 0
-      }))
+      if( label === "segundos" || label === "minutos") {
+         setNumber({
+            previous: value,
+            current:  value !== 0 ? value - 1 : 59 
+         })
+      }
+      else {
+         setNumber({
+            previous: value,
+            current:  value !== 0 ? value - 1 : 59 
+         })
+      }
    }
 
    const renderNumber = () => {
@@ -187,9 +193,6 @@ const FlipCard = ({value}) => {
    }
 
    React.useEffect( () => {
-      // const changePerSecond = setInterval( () => renderNumber(), 600 )
-      // return () => { clearInterval(changePerSecond) }
-
       renderNumber()
    }, [value])
 
