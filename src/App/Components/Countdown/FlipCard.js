@@ -6,7 +6,8 @@ const colorConfig = {
    backgroundDarkColor: 'hsl(236, 21%, 20%)',
    circleColor: 'hsl(234, 17%, 12%)',
    color: 'hsl(345, 95%, 68%)',
-   darkColor: 'hsl(345, 95%, 63%)'
+   darkColor: 'hsl(345, 95%, 63%)',
+   labelColor: 'hsl(237, 18%, 59%)'
 }
 
 const FlipClock = Styled.div`
@@ -14,11 +15,31 @@ const FlipClock = Styled.div`
    font-size: 85px;
    font-weight: bold;
    position: relative;
-   overflow: hidden;
    border-radius: 10px;
    box-shadow: 0px 10px 0px rgba(0,0,0,.4);
 
+   bottom: 5vh;
+
    margin: 20px;
+`
+
+const FlipClockLabel = Styled.span`
+   position: absolute;
+   left: 50%;
+   transform: translateX(-50%);
+   bottom: -40px;
+   
+   width: 100%;
+
+   display: flex;
+   justify-content: center;
+
+   font-size: 16px;
+   font-weight: bolder;
+   letter-spacing: 6px;
+   text-transform: uppercase;
+
+   color: ${colorConfig.labelColor};
 `
 
 const FlipClockCircles = Styled.div`
@@ -198,11 +219,13 @@ const FlipCard = ({value, label}) => {
 
    return (
       <FlipClock>
-         <FlipClockLine />
-         <FlipClockCircles />
+         <FlipClockLabel>{ label }</FlipClockLabel>
+         
          <Digit
             data-digit-before={ number.previous > 9 ? number.previous : "0" + number.previous }
             data-digit-after={ number.current > 9 ? number.current : "0" + number.current }>
+            <FlipClockCircles />
+            <FlipClockLine />
             <Card className={ flipped ? 'flipped' : '' }>
                <CardFaceFront> { number.previous > 9 ? number.previous : "0" + number.previous } </CardFaceFront>
                <CardFaceBack>{ number.current > 9 ? number.current : "0" + number.current }</CardFaceBack>

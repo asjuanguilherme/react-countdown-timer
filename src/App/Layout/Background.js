@@ -11,7 +11,7 @@ const BackgroundContainer = Styled.div`
    position: fixed;
    top: 0;
    left: 0;
-   background: linear-gradient(0deg, hsla(345, 95%, 68%, 0.10) 0%, rgba(0,0,0,0) 100%);
+   background: linear-gradient(0deg, hsla(345, 95%, 68%, 0.07) 0%, rgba(0,0,0,0) 100%);
 `
 const BackgroundBottomElement = Styled.div`
    position: absolute;
