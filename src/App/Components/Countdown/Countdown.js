@@ -5,6 +5,7 @@ import Styled from 'styled-components'
 const colorConfig = {
    backgroundColor: 'hsl(236, 21%, 26%)',
    backgroundDarkColor: 'hsl(236, 21%, 20%)',
+   circleColor: 'hsl(234, 17%, 12%)',
    color: 'hsl(345, 95%, 68%)',
    darkColor: 'hsl(345, 95%, 63%)'
 }
@@ -21,14 +22,67 @@ const FlipClock = Styled.div`
    display: flex;
    font-size: 85px;
    font-weight: bold;
+   position: relative;
+   overflow: hidden;
+   border-radius: 10px;
+   box-shadow: 0px 10px 0px rgba(0,0,0,.4);
 `
+
+const FlipClockCircles = Styled.div`
+   display: flex;
+   height: 100%;
+   width: 100%;
+
+   position: absolute;
+   left: 0;
+   top: 0;
+   z-index: 2;
+
+   &:before, &:after {
+      content: '';
+      position: absolute;
+      z-index: 10;
+      top: 50%;
+      display: flex;
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      background-color: ${colorConfig.circleColor};
+   }
+
+   &:before {
+      transform: translate(-50%, -50%);
+      left: 0px;
+   }
+
+   &:after {
+      transform: translate(+50%, -50%);
+      right: 0px;
+   }
+`
+
+const FlipClockLine = Styled.div`
+   display: flex;
+
+   width: 100%;
+   height: 3px;
+
+   position: absolute;
+   left: 0;
+   bottom: calc(50% - 1px);
+   transform: translateY(-50%);
+   z-index: 2;
+
+   background-color: rgba(0,0,0,0.08);
+`
+
 const Digit = Styled.div`
    position: relative;
 
-   width: 120px;
-   height: 100px;
-   border-radius: 5px;
-   overflow: hidden;
+   width: 160px;
+   height: 150px;
+   border-radius: 10px;
+   overflow: hidden;   
 
    &::before {
       content: attr(data-digit-before);
@@ -63,6 +117,7 @@ const Digit = Styled.div`
       overflow: hidden;
    }
 `
+
 const CardFaceFront = Styled.div`
    position: absolute;
 
@@ -143,10 +198,14 @@ const Countdown = () => {
    return (
       <ClockContainer>
          <FlipClock>
-            <Digit data-digit-before={ number.previous } data-digit-after={ number.current }>
+            <FlipClockLine />
+            <FlipClockCircles />
+            <Digit
+               data-digit-before={ number.previous > 9 ? number.previous : "0" + number.previous }
+               data-digit-after={ number.current > 9 ? number.current : "0" + number.current }>
                <Card className={ flipped ? 'flipped' : '' }>
-                  <CardFaceFront> { number.previous } </CardFaceFront>
-                  <CardFaceBack>{ number.current }</CardFaceBack>
+                  <CardFaceFront> { number.previous > 9 ? number.previous : "0" + number.previous } </CardFaceFront>
+                  <CardFaceBack>{ number.current > 9 ? number.current : "0" + number.current }</CardFaceBack>
                </Card>
             </Digit>
          </FlipClock>
