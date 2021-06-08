@@ -3,13 +3,39 @@ import Styled from 'styled-components'
 
 import FlipCard from './FlipCard'
 
-const ClockContainer = Styled.div`
+const CountdownContainer = Styled.div`
    width: 100vw;
    height: 100vh;
    display: flex;
    justify-content: center;
    align-items: center;
    line-height: 0;
+
+   user-select: none;
+
+   @media screen and (max-width: 960px) {
+      transform: scale(.8);
+   }
+
+   @media screen and (max-width: 768px) {
+      transform: scale(.7);
+   }
+
+   @media screen and (max-width: 640px) {
+      transform: scale(.6);
+   }
+
+   @media screen and (max-width: 540px) {
+      transform: scale(.5);
+   }
+
+   @media screen and (max-width: 480px) {
+      transform: scale(.4)
+   }
+
+   @media screen and (max-width: 340px) {
+      transform: scale(.33)
+   }
 `
 
 const timeProvider = () => {
@@ -49,12 +75,12 @@ const Countdown = () => {
    })
 
    return (
-      <ClockContainer>
+      <CountdownContainer>
          <FlipCard label="dias" value={ time.days } />
          <FlipCard label="horas" value={ time.hours } />
          <FlipCard label="minutos" value={ time.minutes } />
          <FlipCard label="segundos" value={ time.seconds } />
-      </ClockContainer>
+      </CountdownContainer>
    )
 }
 
