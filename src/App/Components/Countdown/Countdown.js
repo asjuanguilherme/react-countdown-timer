@@ -39,7 +39,7 @@ const CountdownContainer = Styled.div`
 `
 
 const timeProvider = () => {
-   const endDate = new Date("Aug 25, 2021 00:00:00")
+   const endDate = new Date("Aug 25, 2022 00:00:00")
    const now = new Date().getTime()
 
    const difference = endDate - now
